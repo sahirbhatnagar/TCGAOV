@@ -250,3 +250,11 @@ if(!pckg) {
   getPckg("TCGA2STAT")
   require(TCGA2STAT)
 }
+
+
+pckg = try(require(caret))
+if(!pckg) {
+  cat("Installing 'caret' from CRAN\n")
+  getPckg("caret")
+  require(caret)
+}
