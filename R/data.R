@@ -7,8 +7,15 @@
 # 
 ##################################
 
-source("R/packages.R")
-source("R/functions.R")
+# source("R/packages.R")
+# source("R/functions.R")
+
+# source("/home/bhatnaga/coexpression/rda/packages.R")
+# source("/home/bhatnaga/coexpression/rda/functions.R")
+
+source(paste(Sys.getenv("PBS_O_WORKDIR"),"packages.R", sep="/"))
+source(paste(Sys.getenv("PBS_O_WORKDIR"),"functions.R", sep="/"))
+
 
 # Get Affymetrix Human Genome U133A expression for ovarian cancer patients
 u133a.ov <- getTCGA(disease = "OV", data.type = "mRNA_Array", type = "U133", clinical = TRUE)
@@ -44,14 +51,20 @@ colnames(DT) %>% unique() %>% length()
 
 
 # downloaded from "http://journals.plos.org/plosone/article/asset?unique&id=info:doi/10.1371/journal.pone.0018064.s015"
+# Deregulation of MYCN, LIN28B and LET7 in a Molecular Subtype of Aggressive High-Grade Serous Ovarian Cancers
 # rows are genes
-DT.C1 <- as.data.table(read_excel("RawData/Expression/journal.pone.0018064.s015.XLS", sheet = "C1 signature genes"))
+# DT.C1 <- as.data.table(read_excel("/home/bhatnaga/coexpression/rda/RawData/Expression/journal.pone.0018064.s015.XLS", sheet = "C1 signature genes"))
+DT.C1 <- as.data.table(read_excel(paste(Sys.getenv("PBS_O_WORKDIR"),"RawData/expression/journal.pone.0018064.s015.XLS", sep="/"), sheet = "C1 signature genes"))
+
 setkey(DT.C1, geneSymbol)
-DT.C2 <- as.data.table(read_excel("RawData/Expression/journal.pone.0018064.s015.XLS", sheet = "C2 signature genes"))
+# DT.C2 <- as.data.table(read_excel("/home/bhatnaga/coexpression/rda/RawData/Expression/journal.pone.0018064.s015.XLS", sheet = "C2 signature genes"))
+DT.C2 <- as.data.table(read_excel(paste(Sys.getenv("PBS_O_WORKDIR"),"RawData/expression/journal.pone.0018064.s015.XLS", sep="/"), sheet = "C2 signature genes"))
 setkey(DT.C2, geneSymbol)
-DT.C4 <- as.data.table(read_excel("RawData/Expression/journal.pone.0018064.s015.XLS", sheet = "C4 signature genes "))
+# DT.C4 <- as.data.table(read_excel("/home/bhatnaga/coexpression/rda/RawData/Expression/journal.pone.0018064.s015.XLS", sheet = "C4 signature genes "))
+DT.C4 <- as.data.table(read_excel(paste(Sys.getenv("PBS_O_WORKDIR"),"RawData/expression/journal.pone.0018064.s015.XLS", sep="/"), sheet = "C4 signature genes "))
 setkey(DT.C4, geneSymbol)
-DT.C5 <- as.data.table(read_excel("RawData/Expression/journal.pone.0018064.s015.XLS", sheet = "C5 signature genes"))
+# DT.C5 <- as.data.table(read_excel("/home/bhatnaga/coexpression/rda/RawData/Expression/journal.pone.0018064.s015.XLS", sheet = "C5 signature genes"))
+DT.C5 <- as.data.table(read_excel(paste(Sys.getenv("PBS_O_WORKDIR"),"RawData/expression/journal.pone.0018064.s015.XLS", sep="/"), sheet = "C5 signature genes"))
 setkey(DT.C5, geneSymbol)
 
 DT.C1$geneSymbol %>% unique %>% length()
